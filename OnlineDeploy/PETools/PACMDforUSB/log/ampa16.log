@@ -1,0 +1,93 @@
+Partition Assistant log is as follows:
+
+====================== System Information ======================
+Module Path: D:\mayn_deploy_system\petools\PACMDforUSB\PartAssist.exe
+Product Name: Windows 7 Ultimate
+Service Package: 
+OS Version: 6.1
+Total Memory: 8083 MB
+Available Memory: 6245 MB
+System Root: C:\Windows
+Processor Architecture: AMD64
+Processor Number: 4
+Current Time: 2017-3-23 10:35:30
+================================================================
+
+[0       ]Utility.cpp(306): 64-bit operating system.
+[2       ]MRP.cpp(1070): Failed to copy ampa.exe.
+AOMEI Partition Assistant 6.2.0 Technician Edition
+[32      ]disk.cpp(595): Failed to open disk in _IsOfflineDisk.
+[32      ]disk.cpp(168) Disk0 is removble use?0
+[32      ]disk.cpp(595): Failed to open disk in _IsOfflineDisk.
+[0       ]disk.cpp(168) Disk1 is removble use?0
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(582): Failed to GetPartitionNumber.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.
+[32      ]vol.cpp(1112): Failed to GetVolumeDevice in IsSystemVolume.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.
+[6       ]ntfsstd.cpp(96): Send FSCTL_GET_NTFS_VOLUME_DATA Control Code failed.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(582): Failed to GetPartitionNumber.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.
+[6       ]ntfsstd.cpp(96): Send FSCTL_GET_NTFS_VOLUME_DATA Control Code failed.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(582): Failed to GetPartitionNumber.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.
+[32      ]vol.cpp(1112): Failed to GetVolumeDevice in IsSystemVolume.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(582): Failed to GetPartitionNumber.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.
+[32      ]vol.cpp(1112): Failed to GetVolumeDevice in IsSystemVolume.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(582): Failed to GetPartitionNumber.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.
+[32      ]vol.cpp(1112): Failed to GetVolumeDevice in IsSystemVolume.
+
+
+
+//////////////////////////// Reload Disk Information ////////////////////////////
+
+
+Disks Summary:
+================================================================
+Disk Index	Total Sector		Geometry			Product Name
+----------	------------		--------			------------
+0		468862128 (223.57GB)	(29185,255,63,512)		GALAX   GX240L10A121-A1  (Base Disk)
+1		5860533168 (2794.52GB)	(364801,255,63,512)		ST3000DM001-1ER166       (GPT Disk)
+
+
+Partitions Summary:
+================================================================
+Disk	Partition	Drive Letter	File System	Total Sector		Used Sector		Free Sector		Partition Status	Pri/Log		DBR Start Sector	End Sector      			MBR Start Sector			Cluster Size	Volume Label
+----	---------	------------	-----------	------------		-----------		-----------		----------------	-------		----------------	----------------			----------------			------------	------------
+[32      ]\: Failed to vol.cpp(831).
+0	0		*:		NTFS(3.1)   	125831167  (60.00GB)	43744767   (20.86GB)	82086400   (39.14GB)	Act                 	Primary		2048           		125833215      (7832,192,40)		0           (0,32,33)			8		WIN7
+[32      ]\: Failed to vol.cpp(831).
+0	0		*:		NTFS(3.1)   	343025663  (163.57GB)	58769687   (28.02GB)	284255976  (135.54GB)	None                	Logical		125835264      		468860927      (29185,61,60)		125835201   (7832,224,10)			8		Èí¼þ
+
+[32      ]\: Failed to vol.cpp(831).
+1	0		*:		Ext4        	4980352    (2.37GB)	1729936    (844.70MB)	3250416    (1.55GB)	None                	GPT		2048           		4982527        (310,37,47)		0           (0,32,33)			8		
+[32      ]\: Failed to vol.cpp(831).
+1	0		*:		Other       	4194304    (2.00GB)	0          (0KB)	4194304    (2.00GB)	None                	GPT		4982528        		9176831        (571,58,63)		0           (310,37,48)			0		
+[32      ]\: Failed to vol.cpp(831).
+1	0		*:		Unallocated 	260352     (127.13MB)	0          (0KB)	260352     (127.13MB)	None                	GPT		9176832        		9437183        (587,111,36)		9176832     (571,59,1)			0		
+[32      ]\: Failed to vol.cpp(831).
+1	0		*:		Other       	5850891168 (2789.92GB)	0          (0KB)	5850891168 (2789.92GB)	None                	GPT		9437184        		5860328351     (364788,144,60)		0           (587,111,37)			0		
+[32      ]\: Failed to vol.cpp(831).
+1	0		*:		Unallocated 	200720     (98.01MB)	0          (0KB)	200720     (98.01MB)	None                	GPT		5860328352     		5860529071     (364801,15,62)		5860328352  (364788,144,61)			0		
+
+================================================================
+AOMEI Partition Assistant Is Working...
+ 
+[32      ]\: Failed to vol.cpp(831).
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.
+[32      ]\: Failed to vol.cpp(831).
+[32      ]\: Failed to vol.cpp(831).
+[32      ]vol.cpp(456): Failed to GetPartitionNumber.

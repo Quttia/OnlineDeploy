@@ -1,0 +1,39 @@
+Partition Assistant log is as follows:
+
+====================== System Information ======================
+Module Path: C:\Users\LCL\Desktop\deploy\PETools\PACMDforUSB\PartAssist.exe
+Product Name: Windows 10 Pro
+Service Package: 
+OS Version: 6.3
+Total Memory: 7869 MB
+Available Memory: 5679 MB
+System Root: C:\Windows
+Processor Architecture: AMD64
+Processor Number: 4
+Current Time: 2017-4-27 14:23:34
+================================================================
+
+[0       ]Utility.cpp(306): 64-bit operating system.
+[2       ]MRP.cpp(1070): Failed to copy ampa.exe.
+AOMEI Partition Assistant 6.2.0 Technician Edition
+[0       ]disk.cpp(168) Disk0 is removble use?0
+
+
+
+//////////////////////////// Reload Disk Information ////////////////////////////
+
+
+Disks Summary:
+================================================================
+Disk Index	Total Sector		Geometry			Product Name
+----------	------------		--------			------------
+0		234441648 (111.79GB)	(14593,255,63,512)		Samsung SSD 750 EVO 120GB (Base Disk)
+
+
+Partitions Summary:
+================================================================
+Disk	Partition	Drive Letter	File System	Total Sector		Used Sector		Free Sector		Partition Status	Pri/Log		DBR Start Sector	End Sector      			MBR Start Sector			Cluster Size	Volume Label
+----	---------	------------	-----------	------------		-----------		-----------		----------------	-------		----------------	----------------			----------------			------------	------------
+0	1		C:		NTFS(3.1)   	125831167  (60.00GB)	73880472   (35.23GB)	51950695   (24.77GB)	Act Boot Sys        	Primary		2048           		125833215      (7832,192,40)		0           (0,32,33)			8		
+0	2		E:		NTFS(3.1)   	108605439  (51.79GB)	71090968   (33.90GB)	37514471   (17.89GB)	None                	Logical		125835264      		234440703      (14593,66,1)		125835201   (7832,224,10)			8		Èí¼þ
+
