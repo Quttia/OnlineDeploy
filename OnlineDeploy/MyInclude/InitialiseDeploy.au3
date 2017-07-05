@@ -1,21 +1,21 @@
-#cs -----------------------------------------------------------------------
+ï»¿#cs -----------------------------------------------------------------------
 
-	Au3°æ±¾:	3.3.14.2
-	½Å±¾×÷Õß:
-	½Å±¾¹¦ÄÜ:	ÔËĞĞ»·¾³³õÊ¼»¯
-	¸üĞÂÈÕÖ¾:	2017.05.24---------------´´½¨ÎÄ¼ş
+	Au3ç‰ˆæœ¬:	3.3.14.2
+	è„šæœ¬ä½œè€…:
+	è„šæœ¬åŠŸèƒ½:	è¿è¡Œç¯å¢ƒåˆå§‹åŒ–
+	æ›´æ–°æ—¥å¿—:	2017.05.24---------------åˆ›å»ºæ–‡ä»¶
 
 #ce -----------------------------------------------------------------------
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_API_Get_NetworkAdapterMAC
-; ËµÃ÷£º»ñÈ¡±¾»úMACµØÖ·
-;		³É¹¦£º³õÊ¼»¯MACµØÖ·£¬Èç ¡°30-85-A9-40-EB-B1¡±;
-;			  ³õÊ¼»¯ÈÕÖ¾ÎÄ¼şÂ·¾¶
-;¡¡¡¡¡¡ Ê§°Ü: @error=1
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£º1£º³É¹¦£»0£ºÊ§°Ü
+; å‡½æ•°åï¼š_API_Get_NetworkAdapterMAC
+; è¯´æ˜ï¼šè·å–æœ¬æœºMACåœ°å€
+;		æˆåŠŸï¼šåˆå§‹åŒ–MACåœ°å€ï¼Œå¦‚ â€œ30-85-A9-40-EB-B1â€;
+;			  åˆå§‹åŒ–æ—¥å¿—æ–‡ä»¶è·¯å¾„
+;ã€€ã€€ã€€ å¤±è´¥: @error=1
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼š1ï¼šæˆåŠŸï¼›0ï¼šå¤±è´¥
 ;==========================================================================
 Func _API_Get_NetworkAdapterMAC()
 	Local $sIP = @IPAddress1
@@ -36,16 +36,16 @@ Func _API_Get_NetworkAdapterMAC()
 	Next
 	$sMac = $s
 	
-	;PEÆô¶¯Ê±ÓĞ¿ÉÄÜ³õÊ¼»¯Î´Íê³ÉÎŞ·¨»ñÈ¡MacµØÖ·
+	;PEå¯åŠ¨æ—¶æœ‰å¯èƒ½åˆå§‹åŒ–æœªå®Œæˆæ— æ³•è·å–Macåœ°å€
 	If $sMac = "00-00-00-00-00-00" Then
 		Return 0
 	Else
-		;Ğ´ÈÕÖ¾ÎÄ¼ş
+		;å†™æ—¥å¿—æ–‡ä»¶
 		$sLogPath = @ScriptDir & "\ConfigFile\" & $sMac & ".log"
 		FileDelete($sLogPath)
-		_FileWriteLog($sLogPath, "------1.³õÊ¼»¯ÔËĞĞ»·¾³*¿ªÊ¼------")
-		_FileWriteLog($sLogPath, "³É¹¦;»ñÈ¡±¾»úIPµØÖ·:" & $sIP)
-		_FileWriteLog($sLogPath, "³É¹¦;»ñÈ¡±¾»úMACµØÖ·:" & $sMac)
+		_FileWriteLog($sLogPath, "------1.åˆå§‹åŒ–è¿è¡Œç¯å¢ƒ*å¼€å§‹------")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è·å–æœ¬æœºIPåœ°å€:" & $sIP)
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è·å–æœ¬æœºMACåœ°å€:" & $sMac)
 		Return 1
 	EndIf
 	
@@ -53,81 +53,81 @@ EndFunc   ;==>_API_Get_NetworkAdapterMAC
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_Read_ShareMapPath
-; ËµÃ÷£º»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄ·şÎñÆ÷¹²ÏíµØÖ·Ó³ÉäÅäÖÃ
-;		³É¹¦: ³õÊ¼»¯·şÎñÆ÷¹²ÏíµØÖ·Ó³Éä£»×¢ÒâµØÖ·×îºóÒª¼ÓĞ±¸Ü£¬Èç\\192.168.40.1\share\
-;¡¡¡¡¡¡ Ê§°Ü: ÔËĞĞÖÕÖ¹
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_Read_ShareMapPath
+; è¯´æ˜ï¼šè·å–é…ç½®æ–‡ä»¶ä¸­çš„æœåŠ¡å™¨å…±äº«åœ°å€æ˜ å°„é…ç½®
+;		æˆåŠŸ: åˆå§‹åŒ–æœåŠ¡å™¨å…±äº«åœ°å€æ˜ å°„ï¼›æ³¨æ„åœ°å€æœ€åè¦åŠ æ–œæ ï¼Œå¦‚\\192.168.40.1\share\
+;ã€€ã€€ã€€ å¤±è´¥: è¿è¡Œç»ˆæ­¢
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _Read_ShareMapPath()
 	
 	Local Const $sFilePath = @ScriptDir & "\ConfigFile\ShareMapConfig.ini"
 	
-	;·şÎñÆ÷¹²ÏíµØÖ·Ó³Éä
+	;æœåŠ¡å™¨å…±äº«åœ°å€æ˜ å°„
 	Local $sRead = IniRead($sFilePath, "ShareMap", "ShareMapPath", "Error")
 	If $sRead = "Error" Then
-		_FileWriteLog($sLogPath, "Ê§°Ü;»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄ·şÎñÆ÷¹²ÏíµØÖ·Ó³ÉäÊ§°Ü£¬³ÌĞòÍË³ö")
-		Shutdown($SD_SHUTDOWN)
+		_FileWriteLog($sLogPath, "å¤±è´¥;è·å–é…ç½®æ–‡ä»¶ä¸­çš„æœåŠ¡å™¨å…±äº«åœ°å€æ˜ å°„å¤±è´¥ï¼Œç¨‹åºé€€å‡º")
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		$sShareMapPath = $sRead
-		_FileWriteLog($sLogPath, "³É¹¦;»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄ·şÎñÆ÷¹²ÏíµØÖ·Ó³ÉäÅäÖÃ£º" & $sShareMapPath)
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è·å–é…ç½®æ–‡ä»¶ä¸­çš„æœåŠ¡å™¨å…±äº«åœ°å€æ˜ å°„é…ç½®ï¼š" & $sShareMapPath)
 	EndIf
 	
-	;·şÎñÆ÷µÇÂ¼
+	;æœåŠ¡å™¨ç™»å½•
 	$sRead = IniRead($sFilePath, "User", "User", "Error")
 	If $sRead = "Error" Then
-		_FileWriteLog($sLogPath, "Ê§°Ü;»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄ·şÎñÆ÷ÓÃ»§ÃûÊ§°Ü£¬³ÌĞòÍË³ö")
-		Shutdown($SD_SHUTDOWN)
+		_FileWriteLog($sLogPath, "å¤±è´¥;è·å–é…ç½®æ–‡ä»¶ä¸­çš„æœåŠ¡å™¨ç”¨æˆ·åå¤±è´¥ï¼Œç¨‹åºé€€å‡º")
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		$sUser = $sRead
-		_FileWriteLog($sLogPath, "³É¹¦;»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄ·şÎñÆ÷ÓÃ»§Ãû£º" & $sUser)
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è·å–é…ç½®æ–‡ä»¶ä¸­çš„æœåŠ¡å™¨ç”¨æˆ·åï¼š" & $sUser)
 	EndIf
 	
 	$sRead = IniRead($sFilePath, "Psd", "Psd", "Error")
 	If $sRead = "Error" Then
-		_FileWriteLog($sLogPath, "Ê§°Ü;»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄ·şÎñÆ÷ÃÜÂëÊ§°Ü£¬³ÌĞòÍË³ö")
-		Shutdown($SD_SHUTDOWN)
+		_FileWriteLog($sLogPath, "å¤±è´¥;è·å–é…ç½®æ–‡ä»¶ä¸­çš„æœåŠ¡å™¨å¯†ç å¤±è´¥ï¼Œç¨‹åºé€€å‡º")
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		$sPsd = $sRead
-		_FileWriteLog($sLogPath, "³É¹¦;»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄ·şÎñÆ÷ÃÜÂë")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è·å–é…ç½®æ–‡ä»¶ä¸­çš„æœåŠ¡å™¨å¯†ç ")
 	EndIf
 	
 EndFunc   ;==>_Read_ShareMapPath
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_CreateMap
-; ËµÃ÷£ºÔÚPEÉÏ½¨Á¢·şÎñÆ÷ÉÏ¹²ÏíµÄÓ³Éä
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_CreateMap
+; è¯´æ˜ï¼šåœ¨PEä¸Šå»ºç«‹æœåŠ¡å™¨ä¸Šå…±äº«çš„æ˜ å°„
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _CreateMap()
 	Local $sCmdStr = "net use * /del /y && net use T: " & StringLeft($sShareMapPath, StringLen($sShareMapPath) - 1) & ' "' & $sPsd & '" /user:' & StringTrimRight(StringTrimLeft($sShareMapPath, 2), 6) & $sUser
 	Local $bFlag = True
 	$sServerLogPath = $sShareMapPath & "\LogFile\"
-	_FileWriteLog($sLogPath, "³É¹¦;»ñÈ¡ÔÚPEÉÏ½¨Á¢·şÎñÆ÷ÉÏ¹²ÏíµÄÓ³ÉäÃüÁîĞĞ£º" & $sCmdStr)
+	$sServerLogDirPath = $sServerLogPath & $sMac
+	_FileWriteLog($sLogPath, "æˆåŠŸ;è·å–åœ¨PEä¸Šå»ºç«‹æœåŠ¡å™¨ä¸Šå…±äº«çš„æ˜ å°„å‘½ä»¤è¡Œï¼š" & $sCmdStr)
 	
 	For $i = 0 To 5
 		RunWait(@ComSpec & " /c " & $sCmdStr, "")
 		
 		If FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE + $FC_CREATEPATH) Then
-			_FileWriteLog($sLogPath, "³É¹¦;ÔÚPEÉÏ½¨Á¢·şÎñÆ÷ÉÏ¹²ÏíµÄÓ³Éä")
+			_FileWriteLog($sLogPath, "æˆåŠŸ;åœ¨PEä¸Šå»ºç«‹æœåŠ¡å™¨ä¸Šå…±äº«çš„æ˜ å°„")
 			$bFlag = False
 			ExitLoop
 		Else
-			_FileWriteLog($sLogPath, "ÖØÊÔ" & $i & ";ÔÚPEÉÏ½¨Á¢·şÎñÆ÷ÉÏ¹²ÏíµÄÓ³Éä")
+			_FileWriteLog($sLogPath, "é‡è¯•" & $i & ";åœ¨PEä¸Šå»ºç«‹æœåŠ¡å™¨ä¸Šå…±äº«çš„æ˜ å°„")
 			Sleep(5000)
 		EndIf
 	Next
 	
 	If $bFlag Then
-		_FileWriteLog($sLogPath, "Ê§°Ü;ÔÚPEÉÏ½¨Á¢·şÎñÆ÷ÉÏ¹²ÏíµÄÓ³ÉäÊ§°Ü")
-		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		_FileWriteLog($sLogPath, "å¤±è´¥;åœ¨PEä¸Šå»ºç«‹æœåŠ¡å™¨ä¸Šå…±äº«çš„æ˜ å°„å¤±è´¥")
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	
@@ -135,11 +135,11 @@ EndFunc   ;==>_CreateMap
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_IsWinPE
-; ËµÃ÷£º¼ì²âµ±Ç°ÏµÍ³»·¾³²»ÊÇPE»·¾³
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£º1£ºÊÇPE»·¾³
-;		  0£º·ÇPE»·¾³
+; å‡½æ•°åï¼š_IsWinPE
+; è¯´æ˜ï¼šæ£€æµ‹å½“å‰ç³»ç»Ÿç¯å¢ƒä¸æ˜¯PEç¯å¢ƒ
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼š1ï¼šæ˜¯PEç¯å¢ƒ
+;		  0ï¼šéPEç¯å¢ƒ
 ;==========================================================================
 Func _IsWinPE()
 	Local $sRam = "ramdisk(0)"
@@ -154,65 +154,66 @@ EndFunc   ;==>_IsWinPE
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_CheckEnvironment
-; ËµÃ÷£º³ÌĞòÆô¶¯Ç°¼ì²âµ±Ç°ÏµÍ³»·¾³
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_CheckEnvironment
+; è¯´æ˜ï¼šç¨‹åºå¯åŠ¨å‰æ£€æµ‹å½“å‰ç³»ç»Ÿç¯å¢ƒ
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _CheckEnvironment()
 	
 	If _IsWinPE() = 0 Then
 		Local $iReturn = MsgBox($MB_OKCANCEL + $MB_ICONQUESTION, "CheckEnvironment", "Checked The Environment Not PE System, Are You Sure To Continue?")
-		_FileWriteLog($sLogPath, "Ê§°Ü;¼ì²âµ½µ±Ç°ÏµÍ³»·¾³²»ÊÇPE»·¾³£¬³ÌĞòÍË³ö")
+		_FileWriteLog($sLogPath, "å¤±è´¥;æ£€æµ‹åˆ°å½“å‰ç³»ç»Ÿç¯å¢ƒä¸æ˜¯PEç¯å¢ƒï¼Œç¨‹åºé€€å‡º")
 		
 		Switch $iReturn
 			Case $IDOK
 				ConsoleWrite("Continue......" & @CRLF)
 			Case $IDCANCEL
-				Shutdown($SD_SHUTDOWN)
+				;Shutdown($SD_SHUTDOWN)
 				Exit
 			Case Else
-				Shutdown($SD_SHUTDOWN)
+				;Shutdown($SD_SHUTDOWN)
 				Exit
 		EndSwitch
 	Else
-		_FileWriteLog($sLogPath, "³É¹¦;¼ì²âµ½µ±Ç°ÏµÍ³»·¾³ÊÇPE»·¾³£¬¿ÉÒÔÔËĞĞ")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;æ£€æµ‹åˆ°å½“å‰ç³»ç»Ÿç¯å¢ƒæ˜¯PEç¯å¢ƒï¼Œå¯ä»¥è¿è¡Œ")
 	EndIf
 	
 EndFunc   ;==>_CheckEnvironment
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_CheckIfExistOS
-; ËµÃ÷£º¼ì²âÊÇ·ñÒÑ´æÔÚ²Ù×÷ÏµÍ³£¬·ÀÖ¹ÍøÆôÉèÔÚµÚÒ»ÓÅÏÈ¼¶µ¼ÖÂÖØ¸´°²×°
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_CheckIfExistOS
+; è¯´æ˜ï¼šæ£€æµ‹æ˜¯å¦å·²å­˜åœ¨æ“ä½œç³»ç»Ÿï¼Œé˜²æ­¢ç½‘å¯è®¾åœ¨ç¬¬ä¸€ä¼˜å…ˆçº§å¯¼è‡´é‡å¤å®‰è£…
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _CheckIfExistOS()
 	
 	If FileExists("C:\InstallationSuccess.Mark") Then
-		_FileWriteLog($sLogPath, "Ê§°Ü;¼ì²âµ½±¾»úÒÑ¾­Íê³É°²×°²Ù×÷ÏµÍ³£¬Èç¹ûÈ·ÈÏĞèÒªÖØĞÂ°²×°£¬ÇëÏÈ½øÈëÏµÍ³É¾³ıCÅÌÏÂµÄInstallationSuccess.MarkÎÄ¼ş")
+		_FileWriteLog($sLogPath, "å¤±è´¥;æ£€æµ‹åˆ°æœ¬æœºå·²ç»å®Œæˆå®‰è£…æ“ä½œç³»ç»Ÿï¼Œå¦‚æœç¡®è®¤éœ€è¦é‡æ–°å®‰è£…ï¼Œè¯·å…ˆè¿›å…¥ç³»ç»Ÿåˆ é™¤Cç›˜ä¸‹çš„InstallationSuccess.Markæ–‡ä»¶")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
-		_FileWriteLog($sLogPath, "³É¹¦;¼ì²âµ½±¾»úÉĞÎ´°²×°²Ù×÷ÏµÍ³£¬¿ÉÒÔ¼ÌĞø°²×°")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;æ£€æµ‹åˆ°æœ¬æœºå°šæœªå®‰è£…æ“ä½œç³»ç»Ÿï¼Œå¯ä»¥ç»§ç»­å®‰è£…")
 	EndIf
 	
 EndFunc   ;==>_CheckIfExistOS
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_InitialiseDeploy
-; ËµÃ÷£º³ÌĞò³õÊ¼»¯¹¤×÷
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_InitialiseDeploy
+; è¯´æ˜ï¼šç¨‹åºåˆå§‹åŒ–å·¥ä½œ
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _InitialiseDeploy()
 	
 	ConsoleWrite(@CRLF & "Auto Deploy Start......" & @CRLF)
 	
-	;³õÊ¼»¯MACµØÖ·£¬ÈÕÖ¾ÎÄ¼şÂ·¾¶
+	;åˆå§‹åŒ–MACåœ°å€ï¼Œæ—¥å¿—æ–‡ä»¶è·¯å¾„
 	For $i = 0 To 9
 		Sleep(5000)
 		If _API_Get_NetworkAdapterMAC() = 1 Then
@@ -220,15 +221,15 @@ Func _InitialiseDeploy()
 		EndIf
 	Next
 	
-	_CheckEnvironment() ;³ÌĞòÆô¶¯Ç°¼ì²âµ±Ç°ÏµÍ³»·¾³
+	_CheckEnvironment() ;ç¨‹åºå¯åŠ¨å‰æ£€æµ‹å½“å‰ç³»ç»Ÿç¯å¢ƒ
 	
-	_Read_ShareMapPath() ;³õÊ¼»¯·şÎñÆ÷Ó³ÉäµØÖ·
+	_Read_ShareMapPath() ;åˆå§‹åŒ–æœåŠ¡å™¨æ˜ å°„åœ°å€
 	
-	_CreateMap() ;ÔÚPEÉÏ½¨Á¢·şÎñÆ÷ÉÏ¹²ÏíµÄÓ³Éä
+	_CreateMap() ;åœ¨PEä¸Šå»ºç«‹æœåŠ¡å™¨ä¸Šå…±äº«çš„æ˜ å°„
 	
-	_CheckIfExistOS() ;¼ì²âÊÇ·ñÒÑ´æÔÚ²Ù×÷ÏµÍ³
+	_CheckIfExistOS() ;æ£€æµ‹æ˜¯å¦å·²å­˜åœ¨æ“ä½œç³»ç»Ÿ
 	
-	_FileWriteLog($sLogPath, "------1.³õÊ¼»¯ÔËĞĞ»·¾³*Íê³É------")
+	_FileWriteLog($sLogPath, "------1.åˆå§‹åŒ–è¿è¡Œç¯å¢ƒ*å®Œæˆ------")
 	_FileWriteLog($sLogPath, "==============================================================================================")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	

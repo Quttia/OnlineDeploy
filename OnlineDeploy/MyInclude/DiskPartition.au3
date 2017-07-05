@@ -30,7 +30,8 @@ Func _Partition_Disk()
 		Case Else
 			_FileWriteLog($sLogPath, "失败;无法识别镜像类型后缀名：" & $sExt & "，请反馈至开发人员")
 			FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-			Shutdown($SD_SHUTDOWN)
+			DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+			;Shutdown($SD_SHUTDOWN)
 			Exit
 	EndSwitch
 	
@@ -65,7 +66,8 @@ Func _Partition_Disk_GPT()
 	If $hFileOpen = -1 Then
 		_FileWriteLog($sLogPath, "失败;写入删除分区脚本失败，请反馈至开发人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;写入删除分区脚本成功")
@@ -88,7 +90,8 @@ Func _Partition_Disk_GPT()
 		If DriveStatus($s & ":\") = "READY" Then
 			_FileWriteLog($sLogPath, "失败;保留分区：" & $s & "被占用，请反馈至开发人员")
 			FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-			Shutdown($SD_SHUTDOWN)
+			DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+			;Shutdown($SD_SHUTDOWN)
 			Exit
 		Else
 			_FileWriteLog($sLogPath, "成功;保留分区：" & $s & "可用")
@@ -122,7 +125,8 @@ Func _Partition_Disk_GPT()
 	If $hFileOpen = -1 Then
 		_FileWriteLog($sLogPath, "失败;读取分区脚本失败，请反馈至开发人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;读取分区脚本成功")
@@ -225,7 +229,8 @@ Func _Partition_GPT_Detail($aPartArray, ByRef $iStartLetter)
 		If $iStartLetter = UBound($aLetterArray) Then
 			_FileWriteLog($sLogPath, "失败;分区总数：" & $iStartLetter & " 超过范围，请反馈至开发人员")
 			FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-			Shutdown($SD_SHUTDOWN)
+			DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+			;Shutdown($SD_SHUTDOWN)
 			Exit
 		EndIf
 	Next
@@ -318,7 +323,8 @@ Func _Partition_MBR_Detail($aPartArray, ByRef $iStartLetter)
 		If $iStartLetter = UBound($aLetterArray) Then
 			_FileWriteLog($sLogPath, "失败;分区总数：" & $iStartLetter & " 超过范围，请反馈至开发人员")
 			FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-			Shutdown($SD_SHUTDOWN)
+			DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+			;Shutdown($SD_SHUTDOWN)
 			Exit
 		EndIf
 	Next

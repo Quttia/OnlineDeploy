@@ -30,7 +30,8 @@ Func _Read_OrderConfig()
 	Else
 		_FileWriteLog($sLogPath, "失败;本机对应的订单文件：“" & $sMac & ".ini”文件缺失，请联系MES相关人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	
@@ -39,7 +40,8 @@ Func _Read_OrderConfig()
 	If @error Then
 		_FileWriteLog($sLogPath, "失败;读取订单文件中的“订单基本信息”失败，请联系MES相关人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;读取订单文件中的“订单基本信息”")
@@ -50,7 +52,8 @@ Func _Read_OrderConfig()
 	If @error Then
 		_FileWriteLog($sLogPath, "失败;读取订单文件中的“硬盘分区信息”失败，请联系MES相关人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;读取订单文件中的“硬盘分区信息”")
@@ -82,7 +85,8 @@ Func _Get_DiskInfo()
 	If Not FileExists($sPartAssistExePath) Then
 		_FileWriteLog($sLogPath, "失败;获取实际硬盘列表工具路径错误，请反馈至开发人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	Local $tmpfile = @ScriptDir & "\ConfigFile\TempDiskInfo.txt"
@@ -97,7 +101,8 @@ Func _Get_DiskInfo()
 	Else
 		_FileWriteLog($sLogPath, "失败;获取实际硬盘列表失败，请反馈至开发人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	
@@ -149,7 +154,8 @@ Func _Get_DiskInfo()
 				Case Else
 					_FileWriteLog($sLogPath, "失败;硬盘大小识别出现异常，请反馈至开发人员：" & $sDiskSpace)
 					FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-					Shutdown($SD_SHUTDOWN)
+					DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+					;Shutdown($SD_SHUTDOWN)
 					Exit
 			EndSwitch
 			
@@ -179,7 +185,8 @@ Func _Validate_OrderConfig()
 	If $iHDCount <> UBound($aHDInfoArray) Then
 		_FileWriteLog($sLogPath, "失败;订单基本信息中硬盘数目：" & $iHDCount & " 与硬盘分区信息中硬盘数目：" & UBound($aHDInfoArray) & " 不一致，请联系MES相关人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;订单基本信息中硬盘数目：" & $iHDCount & " 与硬盘分区信息中硬盘数目一致")
@@ -193,7 +200,8 @@ Func _Validate_OrderConfig()
 	If $iHDCount <> UBound($aDiskArray) Then
 		_FileWriteLog($sLogPath, "失败;订单基本信息中硬盘数目：" & $iHDCount & " 与实际检测到的硬盘数目：" & UBound($aDiskArray) & " 不一致，请联系MES相关人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;订单基本信息中硬盘数目：" & $iHDCount & " 与实际检测到的硬盘数目一致")
@@ -209,7 +217,8 @@ Func _Validate_OrderConfig()
 	If $iStartLetter > 8 Then
 		_FileWriteLog($sLogPath, "失败;分区总数：" & $iStartLetter & " 超过范围，本工具目前最多只能分8个区，请联系MES相关人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	
@@ -239,7 +248,8 @@ Func _Validate_OrderConfig()
 		If Not $bFlag Then
 			_FileWriteLog($sLogPath, "失败;实际硬盘" & $i & "没有匹配到分区规则配置文件中硬盘，硬盘大小：" & $aDiskArray[$i][3] & "GB，请联系MES相关人员")
 			FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-			Shutdown($SD_SHUTDOWN)
+			DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+			;Shutdown($SD_SHUTDOWN)
 			Exit
 		EndIf
 	Next
@@ -271,7 +281,8 @@ Func _ReadImagePath()
 	Else
 		_FileWriteLog($sLogPath, "失败;镜像配置文件image_config.ini不存在，请反馈至开发人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	
@@ -280,7 +291,8 @@ Func _ReadImagePath()
 	If @error Then
 		_FileWriteLog($sLogPath, "失败;读取FTP服务器列表失败，请反馈至开发人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;读取FTP服务器列表")
@@ -292,7 +304,8 @@ Func _ReadImagePath()
 	If $sImagePath = "Error" Then
 		_FileWriteLog($sLogPath, "失败;读取镜像路径失败，请反馈至开发人员")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
 		_FileWriteLog($sLogPath, "成功;读取镜像路径：" & $sImagePath)

@@ -6,7 +6,7 @@
 #AccAu3Wrapper_UseUpx=n										 ;是否使用UPX压缩(y/n) 注:开启压缩极易引起误报问题
 #AccAu3Wrapper_Res_Comment=									 ;程序注释
 #AccAu3Wrapper_Res_Description=								 ;程序描述
-#AccAu3Wrapper_Res_Fileversion=1.0.0.315
+#AccAu3Wrapper_Res_Fileversion=1.0.0.319
 #AccAu3Wrapper_Res_FileVersion_AutoIncrement=y				 ;自动更新版本 y/n/p=自动/不自动/询问
 #AccAu3Wrapper_Res_ProductVersion=1.0						 ;产品版本
 #AccAu3Wrapper_Res_Language=2052							 ;资源语言, 英语=2057/中文=2052
@@ -44,7 +44,9 @@ Global $sShareMapPath ;服务器映射地址
 Global $sUser ;服务器用户名
 Global $sPsd ;服务器密码
 Global $sLogPath ;本地日志文件路径
+Global Const $sLogDirPath = @ScriptDir & "\ConfigFile" ;本地日志文件路径
 Global $sServerLogPath ;服务器日志文件路径
+Global $sServerLogDirPath ;服务器日志文件夹路径
 Global $aBasicInfoArray ;二维数组，存储“订单基本信息”
 Global $aHDInfoArray ;一维数组，元素也为一维数组，从配置文件读取的“硬盘分区信息”
 Global $aDiskArray = [] ;实际硬盘列表

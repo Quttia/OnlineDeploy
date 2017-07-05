@@ -1,59 +1,61 @@
-#cs -----------------------------------------------------------------------
+ï»¿#cs -----------------------------------------------------------------------
 
-	Au3°æ±¾:	3.3.14.2
-	½Å±¾×÷Õß:
-	½Å±¾¹¦ÄÜ:	ÏÂÔØ¾µÏñ²¢»¹Ô­
-	¸üĞÂÈÕÖ¾:	2017.05.24---------------´´½¨ÎÄ¼ş
+	Au3ç‰ˆæœ¬:	3.3.14.2
+	è„šæœ¬ä½œè€…:
+	è„šæœ¬åŠŸèƒ½:	ä¸‹è½½é•œåƒå¹¶è¿˜åŸ
+	æ›´æ–°æ—¥å¿—:	2017.05.24---------------åˆ›å»ºæ–‡ä»¶
 
 #ce -----------------------------------------------------------------------
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_DownloadImageByAria2c
-; ËµÃ÷£ºÏÂÔØ¾µÏñ(Í¨¹ıAria2c·½Ê½ÏÂÔØ)
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_DownloadImageByAria2c
+; è¯´æ˜ï¼šä¸‹è½½é•œåƒ(é€šè¿‡Aria2cæ–¹å¼ä¸‹è½½)
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _DownloadImageByAria2c()
 	
-	_FileWriteLog($sLogPath, "------6.ÏÂÔØ¾µÏñ*¿ªÊ¼------")
+	_FileWriteLog($sLogPath, "------6.ä¸‹è½½é•œåƒ*å¼€å§‹------")
 	
 	If FileExists($sDownloadDrive & ":\") Then
-		_FileWriteLog($sLogPath, "³É¹¦;ÏÂÔØÄ¿Â¼£º" & $sDownloadDrive & "ÅÌ¿ÉÓÃ")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;ä¸‹è½½ç›®å½•ï¼š" & $sDownloadDrive & "ç›˜å¯ç”¨")
 	Else
-		_FileWriteLog($sLogPath, "Ê§°Ü;ÏÂÔØÄ¿Â¼£º" & $sDownloadDrive & "ÅÌ²»´æÔÚ£¬Çë·´À¡ÖÁ¿ª·¢ÈËÔ±")
+		_FileWriteLog($sLogPath, "å¤±è´¥;ä¸‹è½½ç›®å½•ï¼š" & $sDownloadDrive & "ç›˜ä¸å­˜åœ¨ï¼Œè¯·åé¦ˆè‡³å¼€å‘äººå‘˜")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	
-	;Æ´½ÓAria2cÃüÁîĞĞ
+	;æ‹¼æ¥Aria2cå‘½ä»¤è¡Œ
 	Local $sCmdstr = @ScriptDir & "\OtherTools\aria2c.exe -x 10 -s 10 "
 	For $i = 1 To $aServerArray[0][0]
 		$sCmdstr &= $aServerArray[$i][1] & $sImagePath & " "
 	Next
 	$sCmdstr &= "-d " & $sDownloadDrive & ":\ -o image." & $sExt
-	_FileWriteLog($sLogPath, "³É¹¦;¶ÁÈ¡ÃüÁîĞĞ£º" & $sCmdstr)
-	_FileWriteLog($sLogPath, "³É¹¦;ÕıÔÚÏÂÔØ¾µÏñÎÄ¼ş£¬ÇëµÈ´ı...")
+	_FileWriteLog($sLogPath, "æˆåŠŸ;è¯»å–å‘½ä»¤è¡Œï¼š" & $sCmdstr)
+	_FileWriteLog($sLogPath, "æˆåŠŸ;æ­£åœ¨ä¸‹è½½é•œåƒæ–‡ä»¶ï¼Œè¯·ç­‰å¾…...")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	
-	;Ö´ĞĞ¾µÏñÏÂÔØ²¢¼ÆÊ±
+	;æ‰§è¡Œé•œåƒä¸‹è½½å¹¶è®¡æ—¶
 	Local $hTimer = TimerInit()
 	RunWait(@ComSpec & " /c " & $sCmdstr, "")
 	Local $fDiff = TimerDiff($hTimer)
 	
-	;¼ì²âÏÂÔØÊÇ·ñ³É¹¦
+	;æ£€æµ‹ä¸‹è½½æ˜¯å¦æˆåŠŸ
 	$sDownloadImagePath = $sDownloadDrive & ":\image." & $sExt
 	If FileExists($sDownloadImagePath) Then
-		_FileWriteLog($sLogPath, "³É¹¦;ÏÂÔØ¾µÏñ£¬ºÄÊ±" & Round($fDiff / 60000) & "·Ö" & StringRight("0" & Mod(Round($fDiff / 1000), 60), 2) & "Ãë")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;ä¸‹è½½é•œåƒï¼Œè€—æ—¶" & Round($fDiff / 60000) & "åˆ†" & StringRight("0" & Mod(Round($fDiff / 1000), 60), 2) & "ç§’")
 	Else
-		_FileWriteLog($sLogPath, "Ê§°Ü;ÏÂÔØ¾µÏñÊ§°Ü£¬Çë¼ì²éÍøÂçºóÖØĞÂ¿ª»ú")
+		_FileWriteLog($sLogPath, "å¤±è´¥;ä¸‹è½½é•œåƒå¤±è´¥ï¼Œè¯·æ£€æŸ¥ç½‘ç»œåé‡æ–°å¼€æœº")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	EndIf
 	
-	_FileWriteLog($sLogPath, "------6.ÏÂÔØ¾µÏñ*Íê³É------")
+	_FileWriteLog($sLogPath, "------6.ä¸‹è½½é•œåƒ*å®Œæˆ------")
 	_FileWriteLog($sLogPath, "==============================================================================================")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	
@@ -61,83 +63,85 @@ EndFunc   ;==>_DownloadImageByAria2c
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_RecoveryImage
-; ËµÃ÷£º»¹Ô­¾µÏñ
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_RecoveryImage
+; è¯´æ˜ï¼šè¿˜åŸé•œåƒ
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _RecoveryImage()
 	
-	_FileWriteLog($sLogPath, "------7.»¹Ô­¾µÏñ*¿ªÊ¼------")
+	_FileWriteLog($sLogPath, "------7.è¿˜åŸé•œåƒ*å¼€å§‹------")
 	
-	;Ö´ĞĞ¾µÏñ»¹Ô­²¢¼ÆÊ±
+	;æ‰§è¡Œé•œåƒè¿˜åŸå¹¶è®¡æ—¶
 	Local $hTimer = TimerInit()
 	
 	Switch StringLower($sExt)
 		Case "wim"
-			_FileWriteLog($sLogPath, "³É¹¦;¼ì²âµ½±¾»úĞèÒª½øĞĞWIM¾µÏñ»¹Ô­")
-			_Recovery_WIM() ;WIM ¾µÏñ»¹Ô­
+			_FileWriteLog($sLogPath, "æˆåŠŸ;æ£€æµ‹åˆ°æœ¬æœºéœ€è¦è¿›è¡ŒWIMé•œåƒè¿˜åŸ")
+			_Recovery_WIM() ;WIM é•œåƒè¿˜åŸ
 		Case "gho"
-			_FileWriteLog($sLogPath, "³É¹¦;¼ì²âµ½±¾»úĞèÒª½øĞĞGHO¾µÏñ»¹Ô­")
-			_Recovery_GHO() ;GHO ¾µÏñ»¹Ô­
+			_FileWriteLog($sLogPath, "æˆåŠŸ;æ£€æµ‹åˆ°æœ¬æœºéœ€è¦è¿›è¡ŒGHOé•œåƒè¿˜åŸ")
+			_Recovery_GHO() ;GHO é•œåƒè¿˜åŸ
 	EndSwitch
 	
 	Local $fDiff = TimerDiff($hTimer)
-	_FileWriteLog($sLogPath, "³É¹¦;»¹Ô­¾µÏñ£¬ºÄÊ±" & Round($fDiff / 60000) & "·Ö" & StringRight("0" & Mod(Round($fDiff / 1000), 60), 2) & "Ãë")
+	_FileWriteLog($sLogPath, "æˆåŠŸ;è¿˜åŸé•œåƒï¼Œè€—æ—¶" & Round($fDiff / 60000) & "åˆ†" & StringRight("0" & Mod(Round($fDiff / 1000), 60), 2) & "ç§’")
 
-	_FileWriteLog($sLogPath, "------7.»¹Ô­¾µÏñ*Íê³É------")
+	_FileWriteLog($sLogPath, "------7.è¿˜åŸé•œåƒ*å®Œæˆ------")
 	_FileWriteLog($sLogPath, "==============================================================================================")
 	
-	;»¹Ô­Íê³ÉºóÉ¾³ı¾µÏñÎÄ¼ş£»Ê§°Ü²»ÍË³ö³ÌĞò
+	;è¿˜åŸå®Œæˆååˆ é™¤é•œåƒæ–‡ä»¶ï¼›å¤±è´¥ä¸é€€å‡ºç¨‹åº
 	If FileDelete($sDownloadImagePath) = 1 Then
-		_FileWriteLog($sLogPath, "³É¹¦;»¹Ô­Íê³ÉºóÉ¾³ı¾µÏñÎÄ¼ş")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è¿˜åŸå®Œæˆååˆ é™¤é•œåƒæ–‡ä»¶")
 	Else
-		_FileWriteLog($sLogPath, "Ê§°Ü;»¹Ô­Íê³ÉºóÉ¾³ı¾µÏñÎÄ¼şÊ§°Ü£¬Çë·´À¡ÖÁ¿ª·¢ÈËÔ±")
+		_FileWriteLog($sLogPath, "å¤±è´¥;è¿˜åŸå®Œæˆååˆ é™¤é•œåƒæ–‡ä»¶å¤±è´¥ï¼Œè¯·åé¦ˆè‡³å¼€å‘äººå‘˜")
 	EndIf
 	
-	;»¹Ô­Íê³Éºó´´½¨Íê³ÉÎÄ¼ş±êÊ¶£¬ÒÔ·ÀÍøÆôÖØ¸´°²×°£»Ê§°Ü²»ÍË³ö³ÌĞò
+	;è¿˜åŸå®Œæˆååˆ›å»ºå®Œæˆæ–‡ä»¶æ ‡è¯†ï¼Œä»¥é˜²ç½‘å¯é‡å¤å®‰è£…ï¼›å¤±è´¥ä¸é€€å‡ºç¨‹åº
 	If _FileCreate("W:\InstallationSuccess.Mark") = 1 Then
-		_FileWriteLog($sLogPath, "³É¹¦;»¹Ô­Íê³Éºó´´½¨Íê³ÉÎÄ¼ş±êÊ¶")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è¿˜åŸå®Œæˆååˆ›å»ºå®Œæˆæ–‡ä»¶æ ‡è¯†")
 	Else
-		_FileWriteLog($sLogPath, "Ê§°Ü;»¹Ô­Íê³Éºó´´½¨Íê³ÉÎÄ¼ş±êÊ¶Ê§°Ü£¬Çë·´À¡ÖÁ¿ª·¢ÈËÔ±")
+		_FileWriteLog($sLogPath, "å¤±è´¥;è¿˜åŸå®Œæˆååˆ›å»ºå®Œæˆæ–‡ä»¶æ ‡è¯†å¤±è´¥ï¼Œè¯·åé¦ˆè‡³å¼€å‘äººå‘˜")
 	EndIf
 	
 	$fDiff = TimerDiff($hDeployTimer)
-	_FileWriteLog($sLogPath, "³É¹¦;¹à×°ÏµÍ³Íê³É£¬ºÄÊ±" & Round($fDiff / 60000) & "·Ö" & StringRight("0" & Mod(Round($fDiff / 1000), 60), 2) & "Ãë")
+	_FileWriteLog($sLogPath, "æˆåŠŸ;çŒè£…ç³»ç»Ÿå®Œæˆï¼Œè€—æ—¶" & Round($fDiff / 60000) & "åˆ†" & StringRight("0" & Mod(Round($fDiff / 1000), 60), 2) & "ç§’")
 	_FileWriteLog($sLogPath, "==============================================================================================")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	
-	Shutdown($SD_REBOOT)
+	;Shutdown($SD_REBOOT)
+	Shutdown($SD_SHUTDOWN)
 	
 EndFunc   ;==>_RecoveryImage
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_Recovery_WIM
-; ËµÃ÷£º»¹Ô­WIM¾µÏñ
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_Recovery_WIM
+; è¯´æ˜ï¼šè¿˜åŸWIMé•œåƒ
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _Recovery_WIM()
 
 	Local $sHidePartition = ""
 	
-	;¼ì²é»¹Ô­½Å±¾ÊÇ·ñ´æÔÚ
+	;æ£€æŸ¥è¿˜åŸè„šæœ¬æ˜¯å¦å­˜åœ¨
 	If Not FileExists($sImageScriptPath) Then
-		_FileWriteLog($sLogPath, "Ê§°Ü;»¹Ô­¾µÏñ½Å±¾²»´æÔÚ£¬Çë·´À¡ÖÁ¿ª·¢ÈËÔ±")
+		_FileWriteLog($sLogPath, "å¤±è´¥;è¿˜åŸé•œåƒè„šæœ¬ä¸å­˜åœ¨ï¼Œè¯·åé¦ˆè‡³å¼€å‘äººå‘˜")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
-		_FileWriteLog($sLogPath, "³É¹¦;¼ì²âµ½»¹Ô­¾µÏñ½Å±¾")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;æ£€æµ‹åˆ°è¿˜åŸé•œåƒè„šæœ¬")
 	EndIf
 	
-	_FileWriteLog($sLogPath, "³É¹¦;ÕıÔÚ»¹Ô­¾µÏñ£¬ÇëµÈ´ı...")
+	_FileWriteLog($sLogPath, "æˆåŠŸ;æ­£åœ¨è¿˜åŸé•œåƒï¼Œè¯·ç­‰å¾…...")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	
-	;Ö´ĞĞ»¹Ô­¾µÏñ½Å±¾
+	;æ‰§è¡Œè¿˜åŸé•œåƒè„šæœ¬
 	RunWait(@ComSpec & " /c " & $sImageScriptPath & " " & $sDownloadImagePath, "")
-	_FileWriteLog($sLogPath, "³É¹¦;Ö´ĞĞ»¹Ô­¾µÏñ½Å±¾£º" & $sImageScriptPath & " " & $sDownloadImagePath)
+	_FileWriteLog($sLogPath, "æˆåŠŸ;æ‰§è¡Œè¿˜åŸé•œåƒè„šæœ¬ï¼š" & $sImageScriptPath & " " & $sDownloadImagePath)
 	
 	$sHidePartition &= "select disk " & $iSystem & @CRLF
 	$sHidePartition &= "select partition " & $iRecovery & @CRLF
@@ -147,39 +151,40 @@ Func _Recovery_WIM()
 	$sHidePartition &= "list volume" & @CRLF
 	$sHidePartition &= "exit" & @CRLF
 
-	;½«Òş²Ø·ÖÇøÃüÁîĞ´Èë½Å±¾ÎÄ¼şÖĞ
+	;å°†éšè—åˆ†åŒºå‘½ä»¤å†™å…¥è„šæœ¬æ–‡ä»¶ä¸­
 	Local $hFileOpen = FileOpen($sHidePartScriptPath, $FO_OVERWRITE + $FO_CREATEPATH)
 	If $hFileOpen = -1 Then
-		_FileWriteLog($sLogPath, "Ê§°Ü;¶ÁÈ¡Òş²Ø·ÖÇø½Å±¾£¬Çë·´À¡ÖÁ¿ª·¢ÈËÔ±")
+		_FileWriteLog($sLogPath, "å¤±è´¥;è¯»å–éšè—åˆ†åŒºè„šæœ¬ï¼Œè¯·åé¦ˆè‡³å¼€å‘äººå‘˜")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		Shutdown($SD_SHUTDOWN)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
 		Exit
 	Else
-		_FileWriteLog($sLogPath, "³É¹¦;¶ÁÈ¡Òş²Ø·ÖÇø½Å±¾")
+		_FileWriteLog($sLogPath, "æˆåŠŸ;è¯»å–éšè—åˆ†åŒºè„šæœ¬")
 	EndIf
 	
 	FileWrite($hFileOpen, $sHidePartition)
 	FileClose($hFileOpen)
 	
-	;Ö´ĞĞÒş²Ø·ÖÇø½Å±¾
+	;æ‰§è¡Œéšè—åˆ†åŒºè„šæœ¬
 	RunWait(@ComSpec & " /c diskpart /s " & $sHidePartScriptPath, "")
-	_FileWriteLog($sLogPath, "³É¹¦;Ö´ĞĞÒş²Ø·ÖÇø½Å±¾£º" & "diskpart /s " & $sHidePartScriptPath)
+	_FileWriteLog($sLogPath, "æˆåŠŸ;æ‰§è¡Œéšè—åˆ†åŒºè„šæœ¬ï¼š" & "diskpart /s " & $sHidePartScriptPath)
 	
 EndFunc   ;==>_Recovery_WIM
 
 
 ;==========================================================================
-; º¯ÊıÃû£º_Recovery_GHO
-; ËµÃ÷£º»¹Ô­GHO¾µÏñ
-; ²ÎÊı£ºÎŞ
-; ·µ»ØÖµ£ºÎŞ
+; å‡½æ•°åï¼š_Recovery_GHO
+; è¯´æ˜ï¼šè¿˜åŸGHOé•œåƒ
+; å‚æ•°ï¼šæ— 
+; è¿”å›å€¼ï¼šæ— 
 ;==========================================================================
 Func _Recovery_GHO()
 	
 	Local Const $sCmdstr = @ScriptDir & "\OtherTools\Ghost64.exe -clone,mode=pload,src=" & $sDownloadImagePath & ":1,dst=1:1 -sure -fx"
 	
-	_FileWriteLog($sLogPath, "³É¹¦;¶ÁÈ¡ÃüÁîĞĞ£º" & $sCmdstr)
-	_FileWriteLog($sLogPath, "³É¹¦;ÕıÔÚ»¹Ô­¾µÏñ£¬ÇëµÈ´ı...")
+	_FileWriteLog($sLogPath, "æˆåŠŸ;è¯»å–å‘½ä»¤è¡Œï¼š" & $sCmdstr)
+	_FileWriteLog($sLogPath, "æˆåŠŸ;æ­£åœ¨è¿˜åŸé•œåƒï¼Œè¯·ç­‰å¾…...")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	
 	RunWait(@ComSpec & " /c " & $sCmdstr, "")
