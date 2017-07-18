@@ -101,11 +101,13 @@ EndFunc   ;==>_Read_ShareMapPath
 
 ;==========================================================================
 ; 函数名：_CreateMap
-; 说明：在PE上建立服务器上共享的映射
+; 说明：1.在PE上建立服务器上共享的映射
+;~		2.同步服务器时间到本机
 ; 参数：无
 ; 返回值：无
 ;==========================================================================
 Func _CreateMap()
+	
 	Local $sCmdStr = "net use * /del /y && net use T: " & StringLeft($sShareMapPath, StringLen($sShareMapPath) - 1) & ' "' & $sPsd & '" /user:' & StringTrimRight(StringTrimLeft($sShareMapPath, 2), 6) & $sUser
 	Local $bFlag = True
 	$sServerLogPath = $sShareMapPath & "\LogFile\"
@@ -129,6 +131,12 @@ Func _CreateMap()
 		_FileWriteLog($sLogPath, "失败;在PE上建立服务器上共享的映射失败")
 		;Shutdown($SD_SHUTDOWN)
 		Exit
+	Else
+		;由于WIN10PE时区的原因，需要先修改时区，才能同步
+		$sCmdStr = "net time " & StringTrimRight($sShareMapPath, 7) & " /set /y"
+		_FileWriteLog($sLogPath, "成功;获取同步服务器时间到本机的命令行：" & $sCmdStr)
+		RunWait(@ComSpec & " /c " & $sCmdStr, "")
+		_FileWriteLog($sLogPath, "成功;同步服务器时间到本机成功")
 	EndIf
 	
 EndFunc   ;==>_CreateMap
