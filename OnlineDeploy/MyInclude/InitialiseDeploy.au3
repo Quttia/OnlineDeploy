@@ -114,7 +114,7 @@ Func _CreateMap()
 	$sServerLogDirPath = $sServerLogPath & $sMac
 	_FileWriteLog($sLogPath, "成功;获取在PE上建立服务器上共享的映射命令行：" & $sCmdStr)
 	
-	For $i = 0 To 5
+	For $i = 0 To 19
 		RunWait(@ComSpec & " /c " & $sCmdStr, "")
 		
 		If FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE + $FC_CREATEPATH) Then
@@ -123,7 +123,7 @@ Func _CreateMap()
 			ExitLoop
 		Else
 			_FileWriteLog($sLogPath, "重试" & $i & ";在PE上建立服务器上共享的映射")
-			Sleep(5000)
+			Sleep(15000)
 		EndIf
 	Next
 	
