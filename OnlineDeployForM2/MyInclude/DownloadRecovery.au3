@@ -41,6 +41,9 @@ Func _RecoveryImage()
 	_FileWriteLog($sLogPath, "==============================================================================================")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	
+	;直接关机会导致监控日志界面卡，因此在关机前加延迟	
+	Sleep(30000)
+	
 	;Shutdown($SD_REBOOT)
 	Shutdown($SD_SHUTDOWN)
 	
