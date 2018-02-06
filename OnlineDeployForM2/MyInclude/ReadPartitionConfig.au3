@@ -18,7 +18,7 @@
 ;==========================================================================
 Func _Get_DiskInfo()
 	
-	_FileWriteLog($sLogPath, "------3.读取分区规则*开始------")
+	_FileWriteLog($sLogPath, "------2.读取分区规则*开始------")
 	
 	;获取实际硬盘列表
 	If Not FileExists($sPartAssistExePath) Then
@@ -55,15 +55,15 @@ Func _Get_DiskInfo()
 	Local $bInBlack = False
 	Local $sBUSTYPE = ""
 	
-	;检测是否存在硬盘
-	If $aArray[0] <= 5 Then
-		_FileWriteLog($sLogPath, "失败;未检测到要拷的M.2盘，请确认硬盘是否正确安装")
+	If $aArray[0] < 5 Then
+		_FileWriteLog($sLogPath, "失败;未检测到硬盘，请确认硬盘是否正确安装")
 		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
 		Exit
 	EndIf
-
+	
 	For $i = 5 To $aArray[0]
+		
 		;获取总线类型
 		$sBUSTYPE = DriveGetType($i - 5, $DT_BUSTYPE)
 		_FileWriteLog($sLogPath, "成功;获取硬盘" & $i - 5 & "总线类型：" & $sBUSTYPE)
@@ -77,20 +77,11 @@ Func _Get_DiskInfo()
 		Next
 		;05-09修改规则，由于不识别 m.2 接口，先修改成黑名单规则，排除 USB、Virtual、FileBackedVirtual 接口
 		If Not $bInBlack Then
+			ReDim $aDiskArray[$iDiskCount + 1][5]
 			$aTempArray = StringSplit($aArray[$i], "|", $STR_NOCOUNT)
-			
-			;镜像盘加入黑名单，不参与分区
-			If $sImageDiskNo = $i - 5 Then
-				_FileWriteLog($sLogPath, "成功;当前硬盘序号和镜像盘序号相同，不参与分区")
-				ContinueLoop
-			Else
-				_FileWriteLog($sLogPath, "成功;当前硬盘序号：" & $i - 5 & "和镜像盘序号不同，参与分区")
-			EndIf
-			
 			$sDiskSpace = StringStripWS($aTempArray[1], $STR_STRIPALL)
 			$sUnit = StringRight($sDiskSpace, 2)
 			
-			ReDim $aDiskArray[$iDiskCount + 1][5]
 			$aDiskArray[$iDiskCount][0] = (DriveGetType($i - 5, $DT_SSDSTATUS) = "SSD") ? 1 : 0 ; 是否固态硬盘
 			$aDiskArray[$iDiskCount][1] = Number(StringReplace($sDiskSpace, $sUnit, "")) ;实际硬盘大小
 			$aDiskArray[$iDiskCount][2] = StringStripWS($aTempArray[2], $STR_STRIPLEADING + $STR_STRIPTRAILING) ;硬盘信息
@@ -257,7 +248,7 @@ Func _Validate_OrderConfig()
 		EndIf
 	Next
 	
-	_FileWriteLog($sLogPath, "------3.读取分区规则*结束------")
+	_FileWriteLog($sLogPath, "------2.读取分区规则*结束------")
 	_FileWriteLog($sLogPath, "==============================================================================================")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 
@@ -272,7 +263,7 @@ EndFunc   ;==>_Validate_OrderConfig
 ;==========================================================================
 Func _ReadImagePath()
 	
-	_FileWriteLog($sLogPath, "------2.获取镜像路径*开始------")
+	_FileWriteLog($sLogPath, "------3.获取镜像路径*开始------")
 	
 	;检查镜像配置文件是否存在
 	Local Const $sFilePath = $sShareMapPath & "image_config.ini"
@@ -284,6 +275,18 @@ Func _ReadImagePath()
 		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
 		;Shutdown($SD_SHUTDOWN)
 		Exit
+	EndIf
+	
+	;读取FTP服务器列表，存储到全局变量 $aServerArray
+	$aServerArray = IniReadSection($sFilePath, "DownloadServer")
+	If @error Then
+		_FileWriteLog($sLogPath, "失败;读取FTP服务器列表失败，请反馈至开发人员")
+		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
+		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
+		;Shutdown($SD_SHUTDOWN)
+		Exit
+	Else
+		_FileWriteLog($sLogPath, "成功;读取FTP服务器列表")
 	EndIf
 	
 	;读取镜像路径，操作系统类型做参数
@@ -304,130 +307,10 @@ Func _ReadImagePath()
 	$sExt = $aExtArray[0]
 	_FileWriteLog($sLogPath, "成功;获取镜像文件后缀名：" & $sExt)
 	
-	;获取镜像文件名
-	Local $aImageNameArray = StringSplit($sImagePath, "/")
-	$sImageName = $aImageNameArray[$aImageNameArray[0]]
-	_FileWriteLog($sLogPath, "成功;获取镜像文件名：" & $sImageName)
 	
-	;检查镜像文件，获取镜像路径
-	_Get_ImagePath()
-	
-	_FileWriteLog($sLogPath, "------2.获取镜像路径*完成------")
+	_FileWriteLog($sLogPath, "------3.获取镜像路径*完成------")
 	_FileWriteLog($sLogPath, "==============================================================================================")
 	FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
 	
 EndFunc   ;==>_ReadImagePath
-
-
-;==========================================================================
-; 函数名：_Get_ImagePath
-; 说明：获取镜像路径
-; 参数：无
-; 返回值：无
-;==========================================================================
-Func _Get_ImagePath()
-	
-	;获取所有驱动器
-	Local $aDriveArray = DriveGetDrive($DT_ALL)
-	If @error Then
-		_FileWriteLog($sLogPath, "失败;获取驱动器数组失败，请联系IT人员")
-		FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-		DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
-		Exit
-	Else
-		;如果没有检测到驱动器
-		If $aDriveArray[0] = 0 Then
-			_FileWriteLog($sLogPath, "失败;没有检测到镜像盘，请检查主板上是否接有镜像盘")
-			Exit
-		EndIf
-		
-		;检查是否有镜像文件
-		Local $bExistsImage = False
-		For $i = 1 To $aDriveArray[0]
-			$sDownloadImagePath = $aDriveArray[$i] & "\" & $sImageName
-			If FileExists($sDownloadImagePath) Then
-				$bExistsImage = True
-				_FileWriteLog($sLogPath, "成功;检测到目标镜像：" & $sDownloadImagePath)
-				
-				;获得镜像硬盘序号
-				$sImageDiskNo = _GetDiskNumberForDrive($aDriveArray[$i])
-				If @error Then
-					_FileWriteLog($sLogPath, "失败;获得镜像硬盘序号，请联系IT人员")
-					FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-					DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
-					Exit
-				Else
-					_FileWriteLog($sLogPath, "成功;获取目标镜像硬盘序号：" & $sImageDiskNo)
-				EndIf
-				
-				ExitLoop
-			EndIf
-		Next
-		
-		If Not $bExistsImage Then
-			_FileWriteLog($sLogPath, "失败;没有检测到目标镜像：" & $sImageName & "，请联系镜像维护人员")
-			FileCopy($sLogPath, $sServerLogPath, $FC_OVERWRITE)
-			DirCopy($sLogDirPath, $sServerLogDirPath, $FC_OVERWRITE)
-			Exit
-		EndIf
-	EndIf
-	
-EndFunc   ;==>_Get_ImagePath
-
-
-;==========================================================================
-; 函数名：_GetDiskNumberForDrive
-; 说明：根据驱动器卷号获得硬盘序号
-; 参数：驱动器卷号
-; 返回值：硬盘序号
-;==========================================================================
-Func _GetDiskNumberForDrive($sDriveLetter)
-
-	Local $a_hCall = DllCall("kernel32.dll", "hwnd", "CreateFile", _
-			"str", "\\.\" & $sDriveLetter, _ ; logical drive
-			"dword", 0, _
-			"dword", 0, _
-			"ptr", 0, _
-			"dword", 3, _ ; OPEN_EXISTING
-			"dword", 128, _ ; FILE_ATTRIBUTE_NORMAL
-			"ptr", 0)
-
-	If @error Then
-		Return SetError(1, 0, -1) ; your system is very old. Do something.
-	EndIf
-
-	If $a_hCall[0] = -1 Then
-		Return SetError(2, 0, -1) ; non-existing drive
-	EndIf
-
-	Local $hDevice = $a_hCall[0]
-
-	Local $tIOCTL_STORAGE_GET_DEVICE_NUMBER = DllStructCreate("dword DeviceType;" & _
-			"dword DeviceNumber;" & _
-			"int PartitionNumber")
-
-	Local $a_iCall = DllCall("kernel32.dll", "int", "DeviceIoControl", _
-			"hwnd", $hDevice, _
-			"dword", 0x2D1080, _ ; IOCTL_STORAGE_GET_DEVICE_NUMBER
-			"ptr", 0, _
-			"dword", 0, _
-			"ptr", DllStructGetPtr($tIOCTL_STORAGE_GET_DEVICE_NUMBER), _
-			"dword", DllStructGetSize($tIOCTL_STORAGE_GET_DEVICE_NUMBER), _
-			"dword*", 0, _
-			"ptr", 0)
-
-	If @error Or Not $a_hCall[0] Then
-		DllCall("kernel32.dll", "int", "CloseHandle", "hwnd", $hDevice)
-		Return SetError(3, 0, -1) ; DeviceIoControl failed for some reason
-	EndIf
-
-	DllCall("kernel32.dll", "int", "CloseHandle", "hwnd", $hDevice)
-
-	If DllStructGetData($tIOCTL_STORAGE_GET_DEVICE_NUMBER, "DeviceType") = 7 Then ; FILE_DEVICE_DISK
-		Return SetError(0, 0, DllStructGetData($tIOCTL_STORAGE_GET_DEVICE_NUMBER, "DeviceNumber"))
-	EndIf
-
-	Return SetError(4, 0, -1) ; not a disk partition
-
-EndFunc   ;==>_GetDiskNumberForDrive
 

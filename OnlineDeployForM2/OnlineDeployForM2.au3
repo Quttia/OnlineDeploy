@@ -6,7 +6,7 @@
 #AccAu3Wrapper_UseUpx=n										 ;是否使用UPX压缩(y/n) 注:开启压缩极易引起误报问题
 #AccAu3Wrapper_Res_Comment=									 ;程序注释
 #AccAu3Wrapper_Res_Description=								 ;程序描述
-#AccAu3Wrapper_Res_Fileversion=1.0.0.20
+#AccAu3Wrapper_Res_Fileversion=1.0.0.5
 #AccAu3Wrapper_Res_FileVersion_AutoIncrement=y				 ;自动更新版本 y/n/p=自动/不自动/询问
 #AccAu3Wrapper_Res_ProductVersion=1.0						 ;产品版本
 #AccAu3Wrapper_Res_Language=2052							 ;资源语言, 英语=2057/中文=2052
@@ -62,11 +62,11 @@ Global $sPartitionScript = "" ;分区脚本
 Global $iSystem = 0 ;系统盘硬盘序号
 Global $iRecovery = 0 ;还原分区序号
 
+Global $aServerArray ;下载服务器列表
 Global $sImagePath ;镜像路径
-Global $sImageName ;镜像名称
 Global $sExt ;镜像后缀名，用于判断镜像还原方式
+Global Const $sDownloadDrive = "D" ;下载镜像所在盘符
 Global $sDownloadImagePath ;下载镜像到本地的地址
-Global $sImageDiskNo ;镜像盘序号
 
 #include ".\MyInclude\InitialiseDeploy.au3"
 #include ".\MyInclude\ReadPartitionConfig.au3"
@@ -81,15 +81,17 @@ Func _Main()
 	
 	_InitialiseDeploy() ;初始化程序运行环境
 	
-	_ReadImagePath() ;读取镜像路径，镜像盘的名称，判断分区类型
-	
 	_Get_DiskInfo() ;获取实际硬盘列表
 	
 	_Read_PartitionConfig() ;获取存储在本地的分区规则配置文件信息
 	
 	_Validate_OrderConfig() ;校验读取的分区规则是否有误
 	
+	_ReadImagePath() ;读取镜像路径，判断分区类型
+	
 	_Partition_Disk() ;GPT分区或 MBR分区
+	
+	_DownloadImageByAria2c() ;下载镜像
 	
 	_RecoveryImage() ;还原镜像
 	

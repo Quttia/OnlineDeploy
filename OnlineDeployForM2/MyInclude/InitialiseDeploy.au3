@@ -123,10 +123,6 @@ Func _CreateMap()
 			ExitLoop
 		Else
 			_FileWriteLog($sLogPath, "重试" & $i & ";在PE上建立服务器上共享的映射")
-			
-			;重新获取ip地址
-			RunWait(@ComSpec & " /c ipconfig/release", "")
-			RunWait(@ComSpec & " /c ipconfig/renew", "")
 			Sleep(15000)
 		EndIf
 	Next
